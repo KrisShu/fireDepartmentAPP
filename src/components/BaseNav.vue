@@ -1,0 +1,84 @@
+<template>
+  <van-nav-bar
+    class="base-nav"
+    :title="title"
+    :left-arrow="showLeft"
+    :right-text="rightText"
+    @click-left="routerBack"
+    @click-right="$emit('onClickRight')"
+  >
+    <slot name="rightText" slot="right"></slot>
+  </van-nav-bar>
+</template>
+
+<script>
+/**
+ *  作者：0          时间：2019/7/2 14:41
+ *  1,常量从js文件引入，不要定义魔术变量
+ */
+export default {
+  name: "Base",
+  components: {},
+  props: {
+    title: {
+      type: String,
+      default: "标题"
+    },
+    rightText: {
+      type: String,
+      default: ""
+    },
+    showLeft: {
+      type: Boolean,
+      default: true
+    },
+    specialtext:{
+      type:String,
+      default:''
+    }
+  },
+  data() {
+    return {};
+  },
+  computed: {},
+  watch: {},
+  created() {},
+  mounted() {},
+  methods: {
+    routerBack(){
+      this.$router.back();
+      if(this.specialtext){
+        this.$router.push({
+            path:'/terminal',
+            query:{
+                active:this.specialtext
+            }
+        })
+      }
+    }
+    
+  }
+};
+</script>
+
+<style lang="less">
+.base-nav {
+  z-index: 999 !important;
+  background-color: #0385FD !important;
+  position: sticky !important;
+  display: flex;
+  align-items: center;
+  top: 0;
+  & > div,
+  i {
+    color: #fff !important;
+  }
+  &::after {
+    border-width: 0;
+  }
+  /*  右侧文字*/
+  .van-nav-bar__text {
+    color: #fff;
+  }
+}
+</style>
